@@ -1,12 +1,15 @@
 import {View, Text} from 'react-native';
 import React from 'react';
+import {Layout} from '@FocusWorld/Components';
 
-const index = () => {
+const Registration = () => {
   return (
-    <View>
-      <Text>index</Text>
-    </View>
+    <Layout>
+      <View>
+        <Text>Registration</Text>
+      </View>
+    </Layout>
   );
 };
 
-export default index;
+export default Registration;

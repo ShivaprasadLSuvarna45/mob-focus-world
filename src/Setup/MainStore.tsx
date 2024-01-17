@@ -1,4 +1,4 @@
-import {MainStoreData, MainStoreAction} from '@FocusWorld/types';
+import {MainStoreData, MainStoreAction, COUNTRY} from '@FocusWorld/types';
 import React, {createContext, useReducer} from 'react';
 
 export const MainStoreContext = createContext<MainStore>(null);
@@ -15,6 +15,9 @@ function storeReducer(store: MainStoreData, action: MainStoreAction) {
     case MainStoreAction.LOGOUT: {
       return {...initialMainStore};
     }
+    case MainStoreAction.CHANGE_COUNTRY: {
+      return {...store, country: action.country};
+    }
     default: {
       throw Error('Unknown action: ' + action.type);
     }
@@ -24,7 +27,7 @@ function storeReducer(store: MainStoreData, action: MainStoreAction) {
 const initialMainStore = {
   loading: false,
   user: null,
-  country: null,
+  country: COUNTRY.IND,
 };
 
 const MainStore = ({children}: {children: JSX.Element}) => {
