@@ -1,7 +1,7 @@
 import React from 'react';
 import Firebase from './Firebase';
 import MainStore from './MainStore';
-import Login from '@FocusWorld/Features/Login/Login';
+import Login from '@FocusWorld/Features/Login';
 
 const Setup = () => {
   return (
