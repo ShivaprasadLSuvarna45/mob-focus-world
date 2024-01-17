@@ -3,13 +3,13 @@ import {SafeAreaView} from 'react-native';
 
 import '@FocusWorld/i18n';
 import ThemeProvider from '@FocusWorld/Theme';
-import Test from '@FocusWorld/Features/Test';
+import Setup from '@FocusWorld/Features/Setup';
 
 function App(): React.JSX.Element {
   return (
     <ThemeProvider>
       <SafeAreaView>
-        <Test />
+        <Setup />
       </SafeAreaView>
     </ThemeProvider>
   );

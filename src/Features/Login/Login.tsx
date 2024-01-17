@@ -5,7 +5,7 @@ import i18next from 'i18next';
 import {useAppTheme} from '@FocusWorld/Hooks';
 import {Language} from '@FocusWorld/types';
 
-const Test = () => {
+const Login = () => {
   const {t} = useTranslation();
   const {colors} = useAppTheme();
 
@@ -35,4 +35,4 @@ const Test = () => {
   );
 };
 
-export default Test;
+export default Login;
