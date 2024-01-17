@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "43928206809",
+    "project_id": "mobfocusworld",
+    "storage_bucket": "mobfocusworld.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:43928206809:android:51185a42ad771885bf6dc8",
+        "android_client_info": {
+          "package_name": "com.mobfocusworld"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSoc4f_aa8vErtvmYeSyrErybnYyZ4F5w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

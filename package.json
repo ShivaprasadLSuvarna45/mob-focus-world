@@ -12,6 +12,7 @@
     "ios:ide": "open ios/*.xcworkspace/"
   },
   "dependencies": {
+    "@react-native-firebase/app": "^18.7.3",
     "i18next": "^23.7.16",
     "react": "18.2.0",
     "react-i18next": "^14.0.0",
