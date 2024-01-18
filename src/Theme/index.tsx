@@ -12,6 +12,7 @@ const uaeTheme = {
   bgImage: '',
   colors: {
     white: '#FFFFFF',
+    black: '#000000',
     primary: '#EF3340',
     secondary: '#009739',
     tertiary: '#000000',
@@ -25,6 +26,7 @@ const indTheme = {
   bgImage: '',
   colors: {
     white: '#FFFFFF',
+    black: '#000000',
     primary: '#FF671F',
     secondary: '#046A38',
     tertiary: '#06038D',

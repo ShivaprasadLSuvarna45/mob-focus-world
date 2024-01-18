@@ -1,5 +1,8 @@
 {
   "name": "focus world",
+
+  "selectCountry": "Select Country",
+
   "login": {
     "main": "Login",
     "btn": "Login",

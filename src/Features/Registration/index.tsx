@@ -1,11 +1,25 @@
 import React from 'react';
-import {Pressable, StyleSheet, View} from 'react-native';
+import {Image, Pressable, StyleSheet, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {useAppTheme} from '@FocusWorld/Hooks';
 import {SizeVariant} from '@FocusWorld/types';
-import {Layout, Spacer, Text, TextInput} from '@FocusWorld/Components';
+import {
+  Dropdown,
+  Layout,
+  Spacer,
+  Text,
+  TextInput,
+} from '@FocusWorld/Components';
 import {AppTheme} from '@FocusWorld/Theme';
 import {RoutName} from '@FocusWorld/Navigation';
+import {getFlag} from '@FocusWorld/Utils';
+
+const data = [
+  {label: 'UAE', value: 'AE'},
+  {label: 'INDIA', value: 'IN'},
+  {label: 'UK', value: 'UK', flag: 'gb'},
+  {label: 'EGYPT', value: 'EG'},
+];
 
 const Registration = (props: any) => {
   const {t} = useTranslation();
@@ -15,6 +29,17 @@ const Registration = (props: any) => {
 
   const navigateToReg = () => props.navigation.navigate(RoutName.LOGIN);
 
+  const renderItem = (item: any, selected?: boolean) => (
+    <View
+      style={{...styles.itemContainer, ...(selected && styles.selectedItem)}}>
+      <Image
+        style={styles.flagImage}
+        source={{uri: getFlag(item.flag || item.value)}}
+      />
+      <Text size={SizeVariant.MD}>{item.label}</Text>
+    </View>
+  );
+
   return (
     <Layout>
       <Spacer size={SizeVariant.LG} />
@@ -22,6 +47,11 @@ const Registration = (props: any) => {
         {t('registration.main')}
       </Text>
       <Spacer />
+      <Dropdown
+        data={data}
+        renderItem={renderItem}
+        activeColor={colors.white}
+      />
       <TextInput rightIcon="account-box" placeholder="UserName" />
       <TextInput rightIcon="email" placeholder="Email" />
       <TextInput rightIcon="lock" isPassword placeholder="Password" />
@@ -52,6 +82,23 @@ const getStyles = (colors: AppTheme['colors']) =>
       width: 200,
       height: 40,
       backgroundColor: colors.primary,
+    },
+    itemContainer: {
+      flexDirection: 'row',
+      marginVertical: 4,
+      marginHorizontal: 12,
+      paddingVertical: 8,
+      paddingHorizontal: 8,
+    },
+    flagImage: {
+      width: 24,
+      height: 24,
+      marginRight: 12,
+      borderRadius: 4,
+    },
+    selectedItem: {
+      backgroundColor: '#f0f0f0',
+      borderRadius: 8,
     },
   });
 

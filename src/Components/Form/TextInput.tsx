@@ -62,9 +62,10 @@ const TextInput = (props: TextInputProp) => {
         keyboardType={keyboardType}
         inputMode={inputMode}
         returnKeyType="done"
+        textColor={theme.colors.black}
         placeholder={placeholder}
         secureTextEntry={isPassword && isSecure}
-        activeOutlineColor={isEr ? theme.colors.danger : theme.colors.secondary}
+        activeOutlineColor={isEr ? theme.colors.danger : theme.colors.black}
         style={style.input}
         right={passwordEyeIcon}
         left={rightIcon && <PTextInput.Icon icon={rightIcon} />}
@@ -75,7 +76,7 @@ const TextInput = (props: TextInputProp) => {
         {...rest}
       />
       <Spacer />
-      {errorMsg && <Text color="red">{errorMsg}</Text>}
+      {errorMsg && <Text color={theme.colors.danger}>{errorMsg}</Text>}
     </>
   );
 };
@@ -83,7 +84,7 @@ const TextInput = (props: TextInputProp) => {
 const getStyle = ({colors}: AppTheme) =>
   StyleSheet.create({
     container: {
-      color: colors.primary,
+      color: colors.black,
       textAlignVertical: 'center',
     },
     input: {
