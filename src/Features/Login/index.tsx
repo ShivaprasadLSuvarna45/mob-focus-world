@@ -1,61 +1,70 @@
 import React from 'react';
-import {View, Text, Pressable, I18nManager} from 'react-native';
+import {Pressable, StyleSheet, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
-import i18next from 'i18next';
-import {useAppTheme, useMainStore} from '@FocusWorld/Hooks';
-import {COUNTRY, Language, SizeVariant} from '@FocusWorld/types';
-import {Layout, Spacer} from '@FocusWorld/Components';
+import {useAppTheme} from '@FocusWorld/Hooks';
+import {SizeVariant} from '@FocusWorld/types';
+import {Layout, Spacer, Text, TextInput} from '@FocusWorld/Components';
+import {AppTheme} from '@FocusWorld/Theme';
+import {RoutName} from '@FocusWorld/Navigation';
 
-const Login = () => {
+const Login = (props: any) => {
   const {t} = useTranslation();
   const {colors} = useAppTheme();
 
-  const {country, updateCountry} = useMainStore();
+  const styles = getStyles(colors);
 
-  const onPress = () => {
-    const lang = i18next.language;
-
-    const nextLang = lang === Language.AR ? Language.EN : Language.AR;
-    i18next.changeLanguage(nextLang);
-    if (nextLang === Language.AR) {
-      I18nManager.forceRTL(true);
-    } else {
-      I18nManager.forceRTL(false);
-    }
-
-    updateCountry(nextLang === Language.AR ? COUNTRY.UAE : COUNTRY.IND);
-  };
+  const navigateToReg = () => props.navigation.navigate(RoutName.REGISTRATION);
 
   return (
     <Layout>
       <Spacer size={SizeVariant.LG} />
-      <Pressable
-        style={{
-          backgroundColor: colors.secondary,
-          width: 100,
-          height: 30,
-          borderRadius: 12,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-        onPress={onPress}>
-        <Text style={{textAlign: 'center'}}>Press {country}</Text>
-      </Pressable>
-
+      <Text bold size={SizeVariant.LG}>
+        {t('login.main')}
+      </Text>
+      <Spacer />
+      <TextInput rightIcon="email" placeholder="Email" />
+      <TextInput rightIcon="lock" isPassword placeholder="Password" />
       <Spacer size={SizeVariant.MD} />
-      <View
-        style={{
-          backgroundColor: colors.primary,
-          padding: 20,
-          borderRadius: 12,
-        }}>
-        <Text>
-          {t('name') + ' -> '}
-          {i18next.language}
-        </Text>
+      <View style={styles.btnContainer}>
+        <Pressable style={styles.btn}>
+          <Text bold color={colors.white} align="center">
+            {t('login.btn')}
+          </Text>
+        </Pressable>
+        <Spacer />
+        <Pressable onPress={navigateToReg}>
+          <Text color={colors.link}>{t('login.signUp')}</Text>
+        </Pressable>
       </View>
     </Layout>
   );
 };
 
+const getStyles = (colors: AppTheme['colors']) =>
+  StyleSheet.create({
+    btnContainer: {
+      alignItems: 'center',
+    },
+    btn: {
+      borderRadius: 16,
+      padding: 12,
+      width: 200,
+      height: 40,
+      backgroundColor: colors.primary,
+    },
+  });
+
 export default Login;
+
+/* const onPress = () => {
+  const lang = i18next.language;
+
+  const nextLang = lang === Language.AR ? Language.EN : Language.AR;
+  i18next.changeLanguage(nextLang);
+
+  I18nManager.forceRTL(nextLang === Language.AR);
+  I18nManager.allowRTL(nextLang === Language.AR);
+  setTimeout(RNRestart.restart, 1000);
+
+  updateCountry(nextLang === Language.AR ? COUNTRY.UAE : COUNTRY.IND);
+}; */

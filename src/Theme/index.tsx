@@ -15,6 +15,8 @@ const uaeTheme = {
     primary: '#EF3340',
     secondary: '#009739',
     tertiary: '#000000',
+    danger: '#c5000d',
+    link: '#2724c4',
   },
 };
 const indTheme = {
@@ -26,6 +28,8 @@ const indTheme = {
     primary: '#FF671F',
     secondary: '#046A38',
     tertiary: '#06038D',
+    danger: '#c5000d',
+    link: '#2724c4',
   },
 };
 

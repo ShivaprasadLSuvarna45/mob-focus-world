@@ -17,7 +17,17 @@ const userRegistration = async (
 ) => {
   try {
     const data = await auth().createUserWithEmailAndPassword(email, password);
-    return {success: true, data};
+
+    const user = data.currentUser;
+
+    if (user) {
+      await user.updateProfile({
+        displayName,
+      });
+      return {success: true, data};
+    } else {
+      return {success: false, data};
+    }
   } catch (error) {
     return {success: false, data: error};
   }

@@ -1,3 +1,13 @@
 {
-    "name": "focus world"
+  "name": "focus world",
+  "login": {
+    "main": "Login",
+    "btn": "Login",
+    "signUp": "Don't have account? Sign Up"
+  },
+  "registration": {
+    "main": "Registration",
+    "btn": "Create Account",
+    "login": "Already have account? Sign In"
+  }
 }
