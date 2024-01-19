@@ -17,7 +17,9 @@ const useMainStore = () => {
       user,
     });
 
-  const logout = () => dispatch({type: MainStoreAction.LOGOUT});
+  const logout = async () => {
+    dispatch({type: MainStoreAction.LOGOUT});
+  };
 
   const updateCountry = (country: COUNTRY) =>
     dispatch({type: MainStoreAction.CHANGE_COUNTRY, country});

@@ -1,9 +1,10 @@
 import React from 'react';
 import {Image, Pressable, StyleSheet, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
-import {useAppTheme} from '@FocusWorld/Hooks';
+import {useAppTheme, useFirebaseAuth} from '@FocusWorld/Hooks';
 import {SizeVariant} from '@FocusWorld/types';
 import {
+  Button,
   Dropdown,
   Layout,
   Spacer,
@@ -14,16 +15,21 @@ import {AppTheme} from '@FocusWorld/Theme';
 import {RoutName} from '@FocusWorld/Navigation';
 import {getFlag} from '@FocusWorld/Utils';
 
-const data = [
-  {label: 'UAE', value: 'AE'},
-  {label: 'INDIA', value: 'IN'},
-  {label: 'UK', value: 'UK', flag: 'gb'},
-  {label: 'EGYPT', value: 'EG'},
-];
+import {Formik} from 'formik';
+import {getRegistrationSchema} from '@FocusWorld/Validations';
+import {countryList} from '@FocusWorld/Constants';
+
+const registrationInitialValues = {
+  email: '',
+  userName: '',
+  password: '',
+  country: '',
+};
 
 const Registration = (props: any) => {
   const {t} = useTranslation();
   const {colors} = useAppTheme();
+  const {registration} = useFirebaseAuth();
 
   const styles = getStyles(colors);
 
@@ -47,26 +53,75 @@ const Registration = (props: any) => {
         {t('registration.main')}
       </Text>
       <Spacer />
-      <Dropdown
-        data={data}
-        renderItem={renderItem}
-        activeColor={colors.white}
-      />
-      <TextInput rightIcon="account-box" placeholder="UserName" />
-      <TextInput rightIcon="email" placeholder="Email" />
-      <TextInput rightIcon="lock" isPassword placeholder="Password" />
-      <Spacer size={SizeVariant.MD} />
-      <View style={styles.btnContainer}>
-        <Pressable style={styles.btn}>
-          <Text bold color={colors.white} align="center">
-            {t('registration.main')}
-          </Text>
-        </Pressable>
-        <Spacer />
-        <Pressable onPress={navigateToReg}>
-          <Text color={colors.link}>{t('registration.login')}</Text>
-        </Pressable>
-      </View>
+      <Formik
+        validateOnMount
+        validateOnChange
+        initialValues={registrationInitialValues}
+        validationSchema={getRegistrationSchema(t)}>
+        {({
+          handleChange,
+          handleBlur,
+          values,
+          errors,
+          touched,
+          isValid,
+          isValidating,
+        }) => (
+          <>
+            <Dropdown
+              data={countryList}
+              renderItem={renderItem}
+              activeColor={colors.white}
+              onChange={handleChange('country')}
+              isError={errors.country && touched.country}
+            />
+            <TextInput
+              rightIcon="account-box"
+              placeholder="UserName"
+              value={values.userName}
+              onChange={handleChange('userName')}
+              onBlur={handleBlur('userName')}
+              isError={errors.userName && touched.userName}
+            />
+            <TextInput
+              rightIcon="email"
+              placeholder="Email"
+              value={values.email}
+              onBlur={handleBlur('email')}
+              onChange={handleChange('email')}
+              isError={errors.email && touched.email}
+            />
+            <TextInput
+              isPassword
+              rightIcon="lock"
+              placeholder="Password"
+              value={values.password}
+              onBlur={handleBlur('password')}
+              onChange={handleChange('password')}
+              isError={errors.password && touched.password}
+            />
+
+            <Spacer size={SizeVariant.MD} />
+            <View style={styles.btnContainer}>
+              <Button
+                disabled={!isValid || isValidating}
+                label={t('registration.main')}
+                onPress={() => {
+                  registration(values.userName, values.email, values.password);
+                }}>
+                <Text bold color={colors.white} align="center">
+                  {t('registration.main')}
+                </Text>
+              </Button>
+
+              <Spacer />
+              <Pressable onPress={navigateToReg}>
+                <Text color={colors.link}>{t('registration.login')}</Text>
+              </Pressable>
+            </View>
+          </>
+        )}
+      </Formik>
     </Layout>
   );
 };
@@ -76,13 +131,7 @@ const getStyles = (colors: AppTheme['colors']) =>
     btnContainer: {
       alignItems: 'center',
     },
-    btn: {
-      borderRadius: 16,
-      padding: 12,
-      width: 200,
-      height: 40,
-      backgroundColor: colors.primary,
-    },
+
     itemContainer: {
       flexDirection: 'row',
       marginVertical: 4,
@@ -91,10 +140,11 @@ const getStyles = (colors: AppTheme['colors']) =>
       paddingHorizontal: 8,
     },
     flagImage: {
-      width: 24,
+      width: 36,
       height: 24,
       marginRight: 12,
       borderRadius: 4,
+      resizeMode: 'cover',
     },
     selectedItem: {
       backgroundColor: '#f0f0f0',

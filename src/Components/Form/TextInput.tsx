@@ -65,6 +65,7 @@ const TextInput = (props: TextInputProp) => {
         textColor={theme.colors.black}
         placeholder={placeholder}
         secureTextEntry={isPassword && isSecure}
+        outlineColor={isEr ? theme.colors.danger : theme.colors.black}
         activeOutlineColor={isEr ? theme.colors.danger : theme.colors.black}
         style={style.input}
         right={passwordEyeIcon}

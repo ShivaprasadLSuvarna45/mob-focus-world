@@ -18,16 +18,17 @@ type DropdownType = {
   renderItem?: (item: DATA, selected?: boolean) => React.JSX.Element;
   onChange?: (v: string) => void;
   activeColor?: string;
+  isError?: boolean;
 };
 
 const Dropdown = (props: DropdownType) => {
   const [value, setValue] = useState(null);
   const {t} = useTranslation();
 
-  const {renderItem, data, onChange, activeColor} = props;
+  const {renderItem, data, onChange, activeColor, isError, ...rest} = props;
 
   const {colors} = useAppTheme();
-  const styles = getStyles(colors);
+  const styles = getStyles(colors, isError);
 
   const _onChange = (item: DATA) => {
     setValue(item.value);
@@ -55,12 +56,13 @@ const Dropdown = (props: DropdownType) => {
         renderLeftIcon={() => (
           <Entypo style={styles.icon} name="globe" size={24} />
         )}
+        {...rest}
       />
     </View>
   );
 };
 
-const getStyles = (color: AppTheme['colors']) =>
+const getStyles = (color: AppTheme['colors'], isError: boolean) =>
   StyleSheet.create({
     container: {
       backgroundColor: color.white,
@@ -73,6 +75,7 @@ const getStyles = (color: AppTheme['colors']) =>
       borderRadius: 12,
       paddingHorizontal: 8,
       paddingVertical: 24,
+      borderColor: isError ? color.danger : color.black,
       backgroundColor: '#f0f0f0',
     },
     icon: {
@@ -89,6 +92,7 @@ const getStyles = (color: AppTheme['colors']) =>
     },
     placeholderStyle: {
       fontSize: 16,
+      color: 'gray',
     },
     selectedTextStyle: {
       fontSize: 16,
