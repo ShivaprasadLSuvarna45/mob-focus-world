@@ -38,3 +38,7 @@ export enum COUNTRY {
   UAE = 'AE',
   IND = 'IND',
 }
+
+export enum FireStoreCollection {
+  USER = 'user',
+}

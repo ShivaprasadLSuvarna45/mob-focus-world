@@ -12,5 +12,8 @@
     "main": "Registration",
     "btn": "Create Account",
     "login": "Already have account? Sign In"
+  },
+  "home": {
+    "btn": "Logout"
   }
 }

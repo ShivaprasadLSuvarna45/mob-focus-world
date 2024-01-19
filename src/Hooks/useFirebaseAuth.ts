@@ -1,5 +1,6 @@
 import auth from '@react-native-firebase/auth';
 import useMainStore from './useMainStore';
+// import firestore from '@react-native-firebase/firestore';
 
 const emailLogin = async (email: string, password: string) => {
   try {
@@ -19,6 +20,31 @@ const userRegistration = async (
     const data = await auth().createUserWithEmailAndPassword(email, password);
 
     const currentUser = auth().currentUser;
+
+    // const usersCollection = firestore().collection('users');
+    // usersCollection.doc(uid).set(
+    //   {
+    //     country: country,
+    //   },
+    //   {merge: true},
+    // );
+
+    /*
+    usersCollection
+      .doc(uid)
+      .get()
+      .then(doc => {
+        if (doc.exists) {
+          const userCountry = doc.data().country;
+          console.log("User's Country:", userCountry);
+        } else {
+          console.log('User not found');
+        }
+      })
+      .catch(error => {
+        console.error('Error getting user information:', error);
+      });
+    */
 
     if (currentUser) {
       await currentUser.updateProfile({
