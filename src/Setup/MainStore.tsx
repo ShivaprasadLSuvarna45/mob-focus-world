@@ -7,13 +7,13 @@ export const MainStoreDispatchContext = createContext<MainStoreAction>(null);
 function storeReducer(store: MainStoreData, action: MainStoreAction) {
   switch (action.type) {
     case MainStoreAction.LOADING: {
-      return {...store, loading: action.loading || true};
+      return {...store, loading: action.loading};
     }
     case MainStoreAction.LOGIN: {
-      return {...store, user: action.user};
+      return {...store, user: action.user, loading: false};
     }
     case MainStoreAction.LOGOUT: {
-      return {...initialMainStore};
+      return {...initialMainStore, loading: false};
     }
     case MainStoreAction.CHANGE_COUNTRY: {
       return {...store, country: action.country};

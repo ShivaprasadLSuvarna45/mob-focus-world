@@ -12,6 +12,7 @@ import {
 import {useAppTheme} from '@FocusWorld/Hooks';
 import {AppTheme} from '@FocusWorld/Theme';
 import FadeInView from './FadeInView';
+import Loader from '../Loader';
 
 type LayoutProps = {
   header?: React.ReactNode;
@@ -41,8 +42,8 @@ const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
   return (
     <>
       <StatusBar backgroundColor={colors.white} barStyle={'dark-content'} />
-      <SafeAreaView style={{backgroundColor: colors.white}} />
       <SafeAreaView style={style.safeAreaView}>
+        <Loader />
         <KeyboardAvoidingView
           style={style.keyboardAvoid}
           {...defaultKeyboardAvoidingProps}>

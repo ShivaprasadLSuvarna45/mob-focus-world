@@ -1,6 +1,5 @@
 import auth from '@react-native-firebase/auth';
 import useMainStore from './useMainStore';
-// import firestore from '@react-native-firebase/firestore';
 
 const emailLogin = async (email: string, password: string) => {
   try {
@@ -15,42 +14,22 @@ const userRegistration = async (
   userName: string,
   email: string,
   password: string,
+  country: string,
 ) => {
   try {
     const data = await auth().createUserWithEmailAndPassword(email, password);
 
     const currentUser = auth().currentUser;
 
-    // const usersCollection = firestore().collection('users');
-    // usersCollection.doc(uid).set(
-    //   {
-    //     country: country,
-    //   },
-    //   {merge: true},
-    // );
-
-    /*
-    usersCollection
-      .doc(uid)
-      .get()
-      .then(doc => {
-        if (doc.exists) {
-          const userCountry = doc.data().country;
-          console.log("User's Country:", userCountry);
-        } else {
-          console.log('User not found');
-        }
-      })
-      .catch(error => {
-        console.error('Error getting user information:', error);
-      });
-    */
-
     if (currentUser) {
       await currentUser.updateProfile({
         displayName: userName,
       });
-      return {success: true, data};
+
+      return {
+        success: true,
+        data: {...currentUser.toJSON(), displayName: userName},
+      };
     } else {
       return {success: false, data};
     }
@@ -69,23 +48,29 @@ const userSignOut = async () => {
 };
 
 const useFirebaseAuth = () => {
-  const {setUser, logout: dispatchLogout} = useMainStore();
+  const {setUser, logout: dispatchLogout, setLoading} = useMainStore();
 
-  const signOut = () => {
-    const {success, data} = userSignOut();
+  const signOut = async () => {
+    setLoading(true);
+    const {success, data} = await userSignOut();
+
     if (success) {
       dispatchLogout();
     } else {
+      setLoading(false);
       console.log('LOUT:ERROR', data); //setError to Store
     }
   };
 
   const login = async (email: string, password: string) => {
+    setLoading(true);
+
     const {success, data} = await emailLogin(email, password);
 
     if (success) {
-      setUser(data);
+      setUser(data?.user);
     } else {
+      setLoading(false);
       console.log('LOGIN:ERROR', data); //setError to Store
     }
   };
@@ -94,11 +79,19 @@ const useFirebaseAuth = () => {
     userName: string,
     email: string,
     password: string,
+    country: string,
   ) => {
-    const {success, data} = await userRegistration(userName, email, password);
+    setLoading(true);
+    const {success, data} = await userRegistration(
+      userName,
+      email,
+      password,
+      country,
+    );
     if (success) {
       setUser(data);
     } else {
+      setLoading(false);
       console.log('REGISTRATION:ERROR', data); //setError to Store
     }
   };
@@ -107,3 +100,31 @@ const useFirebaseAuth = () => {
 };
 
 export default useFirebaseAuth;
+
+/*
+
+   import firestore from '@react-native-firebase/firestore';
+
+    usersCollection
+      .doc(uid)
+      .get()
+      .then(doc => {
+        if (doc.exists) {
+          const userCountry = doc.data().country;
+          console.log("User's Country:", userCountry);
+        } else {
+          console.log('User not found');
+        }
+      })
+      .catch(error => {
+        console.error('Error getting user information:', error);
+      });
+
+
+      const userDoc = firestore().collection('users').doc(currentUser.uid);
+
+      await userDoc.set({
+        userName,
+        country: country,
+      });
+*/

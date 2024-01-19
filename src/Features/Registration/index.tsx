@@ -107,7 +107,12 @@ const Registration = (props: any) => {
                 disabled={!isValid || isValidating}
                 label={t('registration.main')}
                 onPress={() => {
-                  registration(values.userName, values.email, values.password);
+                  registration(
+                    values.userName,
+                    values.email,
+                    values.password,
+                    values.country,
+                  );
                 }}>
                 <Text bold color={colors.white} align="center">
                   {t('registration.main')}

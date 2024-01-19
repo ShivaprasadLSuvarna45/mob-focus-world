@@ -11,10 +11,10 @@ const useMainStore = () => {
 
   const {loading, user, country} = storeData || {};
 
-  const setUser = (user: object) =>
+  const setUser = (autUser: object) =>
     dispatch({
       type: MainStoreAction.LOGIN,
-      user,
+      user: autUser,
     });
 
   const logout = async () => {
@@ -24,6 +24,9 @@ const useMainStore = () => {
   const updateCountry = (country: COUNTRY) =>
     dispatch({type: MainStoreAction.CHANGE_COUNTRY, country});
 
+  const setLoading = (loading = true) =>
+    dispatch({type: MainStoreAction.LOADING, loading});
+
   return {
     isLoading: loading,
     user,
@@ -31,6 +34,7 @@ const useMainStore = () => {
     setUser,
     logout,
     updateCountry,
+    setLoading,
   };
 };
 

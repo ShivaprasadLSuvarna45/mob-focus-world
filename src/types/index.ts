@@ -40,5 +40,5 @@ export enum COUNTRY {
 }
 
 export enum FireStoreCollection {
-  USER = 'user',
+  USER = 'users',
 }

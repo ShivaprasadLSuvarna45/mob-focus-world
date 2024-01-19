@@ -13,12 +13,8 @@ const Home = () => {
   const {t} = useTranslation();
 
   const onPressLogOut = async () => {
-    const res = await signOut();
+    await signOut();
   };
-
-  console.log('====================================');
-  console.log(user);
-  console.log('====================================');
 
   return (
     <Layout>
@@ -30,7 +26,7 @@ const Home = () => {
         <Text>{user.email}</Text>
         <Spacer size={SizeVariant.LG} />
         <Button onPress={onPressLogOut}>
-          <Text bold align color={colors.white}>
+          <Text bold align="center" color={colors.white}>
             {t('home.btn')}
           </Text>
         </Button>
