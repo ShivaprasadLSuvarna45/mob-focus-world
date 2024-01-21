@@ -1,23 +1,15 @@
 import React from 'react';
-import {Image, Pressable, StyleSheet, View} from 'react-native';
+import {Pressable, StyleSheet, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {useAppTheme, useFirebaseAuth} from '@FocusWorld/Hooks';
-import {SizeVariant} from '@FocusWorld/types';
-import {
-  Button,
-  Dropdown,
-  Layout,
-  Spacer,
-  Text,
-  TextInput,
-} from '@FocusWorld/Components';
-import {AppTheme} from '@FocusWorld/Theme';
+import {COUNTRY, SizeVariant} from '@FocusWorld/types';
+import {Button, Layout, Spacer, Text, TextInput} from '@FocusWorld/Components';
 import {RoutName} from '@FocusWorld/Navigation';
-import {getFlag} from '@FocusWorld/Utils';
 
 import {Formik} from 'formik';
 import {getRegistrationSchema} from '@FocusWorld/Validations';
-import {countryList} from '@FocusWorld/Constants';
+import LanguageSelector from '../Home/LanguageSelector';
+import CountrySelector from './CountrySelector';
 
 const registrationInitialValues = {
   email: '',
@@ -34,17 +26,6 @@ const Registration = (props: any) => {
   const styles = getStyles(colors);
 
   const navigateToReg = () => props.navigation.navigate(RoutName.LOGIN);
-
-  const renderItem = (item: any, selected?: boolean) => (
-    <View
-      style={{...styles.itemContainer, ...(selected && styles.selectedItem)}}>
-      <Image
-        style={styles.flagImage}
-        source={{uri: getFlag(item.flag || item.value)}}
-      />
-      <Text size={SizeVariant.MD}>{item.label}</Text>
-    </View>
-  );
 
   return (
     <Layout>
@@ -68,24 +49,29 @@ const Registration = (props: any) => {
           isValidating,
         }) => (
           <>
-            <Dropdown
-              data={countryList}
-              renderItem={renderItem}
-              activeColor={colors.white}
+            <CountrySelector
               onChange={handleChange('country')}
               isError={errors.country && touched.country}
             />
             <TextInput
               rightIcon="account-box"
-              placeholder="UserName"
+              placeholder={t('registration.userName')}
               value={values.userName}
               onChange={handleChange('userName')}
               onBlur={handleBlur('userName')}
               isError={errors.userName && touched.userName}
             />
+            <Text>
+              {t(
+                `registration.userNameValid.${(
+                  values?.country || COUNTRY.IN
+                ).toLowerCase()}`,
+              )}
+            </Text>
+            <Spacer />
             <TextInput
               rightIcon="email"
-              placeholder="Email"
+              placeholder={t('registration.email')}
               value={values.email}
               onBlur={handleBlur('email')}
               onChange={handleChange('email')}
@@ -94,7 +80,7 @@ const Registration = (props: any) => {
             <TextInput
               isPassword
               rightIcon="lock"
-              placeholder="Password"
+              placeholder={t('registration.password')}
               value={values.password}
               onBlur={handleBlur('password')}
               onChange={handleChange('password')}
@@ -127,33 +113,16 @@ const Registration = (props: any) => {
           </>
         )}
       </Formik>
+      <Spacer size={SizeVariant.LG} />
+      <LanguageSelector />
     </Layout>
   );
 };
 
-const getStyles = (colors: AppTheme['colors']) =>
+const getStyles = () =>
   StyleSheet.create({
     btnContainer: {
       alignItems: 'center',
-    },
-
-    itemContainer: {
-      flexDirection: 'row',
-      marginVertical: 4,
-      marginHorizontal: 12,
-      paddingVertical: 8,
-      paddingHorizontal: 8,
-    },
-    flagImage: {
-      width: 36,
-      height: 24,
-      marginRight: 12,
-      borderRadius: 4,
-      resizeMode: 'cover',
-    },
-    selectedItem: {
-      backgroundColor: '#f0f0f0',
-      borderRadius: 8,
     },
   });
 

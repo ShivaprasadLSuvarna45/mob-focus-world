@@ -7,6 +7,7 @@ import {Button, Layout, Spacer, Text, TextInput} from '@FocusWorld/Components';
 import {RoutName} from '@FocusWorld/Navigation';
 import {Formik} from 'formik';
 import {getLoginSchema} from '@FocusWorld/Validations';
+import LanguageSelector from '../Home/LanguageSelector';
 
 const loginInitialValues = {
   email: '',
@@ -46,7 +47,7 @@ const Login = (props: any) => {
           <>
             <TextInput
               rightIcon="email"
-              placeholder="Email"
+              placeholder={t('registration.email')}
               value={values.email}
               onBlur={handleBlur('email')}
               onChange={handleChange('email')}
@@ -55,7 +56,7 @@ const Login = (props: any) => {
             <TextInput
               isPassword
               rightIcon="lock"
-              placeholder="Password"
+              placeholder={t('registration.password')}
               value={values.password}
               onBlur={handleBlur('password')}
               onChange={handleChange('password')}
@@ -78,6 +79,8 @@ const Login = (props: any) => {
           </>
         )}
       </Formik>
+      <Spacer size={SizeVariant.LG} />
+      <LanguageSelector />
     </Layout>
   );
 };
@@ -90,16 +93,3 @@ const getStyles = () =>
   });
 
 export default Login;
-
-/* const onPress = () => {
-  const lang = i18next.language;
-
-  const nextLang = lang === Language.AR ? Language.EN : Language.AR;
-  i18next.changeLanguage(nextLang);
-
-  I18nManager.forceRTL(nextLang === Language.AR);
-  I18nManager.allowRTL(nextLang === Language.AR);
-  setTimeout(RNRestart.restart, 1000);
-
-  updateCountry(nextLang === Language.AR ? COUNTRY.UAE : COUNTRY.IND);
-}; */

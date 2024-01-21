@@ -27,7 +27,7 @@ function storeReducer(store: MainStoreData, action: MainStoreAction) {
 const initialMainStore = {
   loading: false,
   user: null,
-  country: COUNTRY.IND,
+  country: COUNTRY.IN,
 };
 
 const MainStore = ({children}: {children: JSX.Element}) => {

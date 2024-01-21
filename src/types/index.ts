@@ -1,6 +1,7 @@
 export enum Language {
   EN = 'en',
   AR = 'ar',
+  HI = 'hi',
 }
 
 export enum MainStoreAction {
@@ -35,10 +36,17 @@ export type SpacerProps = {
 };
 
 export enum COUNTRY {
-  UAE = 'AE',
-  IND = 'IND',
+  AE = 'AE',
+  IN = 'IN',
+  UK = 'UK',
+  EG = 'EG',
 }
 
 export enum FireStoreCollection {
   USER = 'users',
+}
+
+export enum StorageKey {
+  LANG = 'language',
+  COUNTRY = 'country',
 }

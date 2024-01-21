@@ -14,6 +14,7 @@ type DATA = {
 };
 
 type DropdownType = {
+  defaultSelected: string;
   data: DATA;
   renderItem?: (item: DATA, selected?: boolean) => React.JSX.Element;
   onChange?: (v: string) => void;
@@ -25,7 +26,15 @@ const Dropdown = (props: DropdownType) => {
   const [value, setValue] = useState(null);
   const {t} = useTranslation();
 
-  const {renderItem, data, onChange, activeColor, isError, ...rest} = props;
+  const {
+    renderItem,
+    data,
+    onChange,
+    activeColor,
+    isError,
+    defaultSelected,
+    ...rest
+  } = props;
 
   const {colors} = useAppTheme();
   const styles = getStyles(colors, isError);
@@ -50,7 +59,7 @@ const Dropdown = (props: DropdownType) => {
         labelField="label"
         valueField="value"
         placeholder={t('selectCountry')}
-        value={value}
+        value={value || defaultSelected}
         containerStyle={styles.containerStyle}
         renderItem={renderItem}
         renderLeftIcon={() => (

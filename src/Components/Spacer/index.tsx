@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {View} from 'react-native';
 
 import {SizeVariant, SpacerProps} from '@FocusWorld/types';
@@ -18,13 +18,15 @@ const Sizes = {
 const Spacer: React.FC<SpacerProps> = (props: SpacerProps) => {
   const {size = SizeVariant.XXS, horizontal = false, vertical = true} = props;
 
-  const _size = Sizes[size || SizeVariant.SM];
-  const isVertical = !horizontal && vertical;
+  const style = useMemo(() => {
+    const _size = Sizes[size || SizeVariant.SM];
+    const isVertical = !horizontal && vertical;
 
-  const style = {
-    ...(isVertical && {height: _size}),
-    ...(horizontal && {width: _size}),
-  };
+    return {
+      ...(isVertical && {height: _size}),
+      ...(horizontal && {width: _size}),
+    };
+  }, [size, horizontal, vertical]);
 
   return <View style={style} />;
 };

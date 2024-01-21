@@ -14,7 +14,6 @@ const userRegistration = async (
   userName: string,
   email: string,
   password: string,
-  country: string,
 ) => {
   try {
     const data = await auth().createUserWithEmailAndPassword(email, password);
@@ -48,7 +47,12 @@ const userSignOut = async () => {
 };
 
 const useFirebaseAuth = () => {
-  const {setUser, logout: dispatchLogout, setLoading} = useMainStore();
+  const {
+    setUser,
+    logout: dispatchLogout,
+    setLoading,
+    updateCountry,
+  } = useMainStore();
 
   const signOut = async () => {
     setLoading(true);
@@ -90,6 +94,7 @@ const useFirebaseAuth = () => {
     );
     if (success) {
       setUser(data);
+      updateCountry(country);
     } else {
       setLoading(false);
       console.log('REGISTRATION:ERROR', data); //setError to Store
@@ -100,31 +105,3 @@ const useFirebaseAuth = () => {
 };
 
 export default useFirebaseAuth;
-
-/*
-
-   import firestore from '@react-native-firebase/firestore';
-
-    usersCollection
-      .doc(uid)
-      .get()
-      .then(doc => {
-        if (doc.exists) {
-          const userCountry = doc.data().country;
-          console.log("User's Country:", userCountry);
-        } else {
-          console.log('User not found');
-        }
-      })
-      .catch(error => {
-        console.error('Error getting user information:', error);
-      });
-
-
-      const userDoc = firestore().collection('users').doc(currentUser.uid);
-
-      await userDoc.set({
-        userName,
-        country: country,
-      });
-*/

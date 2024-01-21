@@ -2,18 +2,44 @@
   "name": "focus world",
 
   "selectCountry": "Select Country",
+  "changeLanguage": "Change Language",
+  "update": "Update",
 
   "login": {
     "main": "Login",
     "btn": "Login",
+    "email": "Email",
+    "password": "Password",
     "signUp": "Don't have account? Sign Up"
   },
   "registration": {
     "main": "Registration",
     "btn": "Create Account",
-    "login": "Already have account? Sign In"
+    "userName": "UserName",
+    "email": "Email",
+    "password": "Password",
+    "login": "Already have account? Sign In",
+    "userNameValid": {
+      "ae": "Letters, numbers, and underscore. [4-16]",
+      "in": "Begins with a letter, allows letters and numbers. [5-20]",
+      "uk": "Letters, numbers, dots, and underscores. [6-30]",
+      "eg": "Only letters and numbers. [3-10]"
+    }
   },
   "home": {
     "btn": "Logout"
+  },
+
+  "ln": {
+    "en": "English",
+    "ar": "العربية",
+    "hi": "हिन्दी"
+  },
+
+  "country": {
+    "in": "India",
+    "ae": "United Arab Emirates",
+    "uk": "United Kingdom",
+    "eg": "Egypt"
   }
 }

@@ -1,44 +1,29 @@
 import {useMainStore} from '@FocusWorld/Hooks';
 import {COUNTRY} from '@FocusWorld/types';
 import React from 'react';
-import {
-  MD3LightTheme as DefaultTheme,
-  Provider as PaperProvider,
-} from 'react-native-paper';
+import {Provider as PaperProvider} from 'react-native-paper';
+import {egTheme, indTheme, uaeTheme, ukTheme} from './AppTheme';
 
-const uaeTheme = {
-  ...DefaultTheme,
-  myOwnProperty: true,
-  bgImage: '',
-  colors: {
-    white: '#FFFFFF',
-    black: '#000000',
-    primary: '#EF3340',
-    secondary: '#009739',
-    tertiary: '#000000',
-    danger: '#c5000d',
-    link: '#2724c4',
-  },
-};
-const indTheme = {
-  ...DefaultTheme,
-  myOwnProperty: true,
-  bgImage: '',
-  colors: {
-    white: '#FFFFFF',
-    black: '#000000',
-    primary: '#FF671F',
-    secondary: '#046A38',
-    tertiary: '#06038D',
-    danger: '#c5000d',
-    link: '#2724c4',
-  },
+const getTheme = (country: COUNTRY) => {
+  switch (country) {
+    case COUNTRY.IN:
+      return indTheme;
+    case COUNTRY.AE:
+      return uaeTheme;
+    case COUNTRY.UK:
+      return ukTheme;
+    case COUNTRY.EG:
+      return egTheme;
+
+    default:
+      return indTheme;
+  }
 };
 
 const ThemeProvider = ({children}: {children: JSX.Element}) => {
   const {country} = useMainStore();
 
-  const appTheme: ThemeProp = country === COUNTRY.UAE ? uaeTheme : indTheme;
+  const appTheme: ThemeProp = getTheme(country);
 
   return <PaperProvider theme={appTheme}>{children}</PaperProvider>;
 };
